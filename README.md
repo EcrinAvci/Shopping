@@ -51,7 +51,7 @@ Bu proje, ASP.NET (MVC) ve SQLite veritabanı kullanılarak geliştirilen basit 
 ## Ekran Görüntüleri
 
 ### Ana Sayfa
-![Ana Sayfa](./Screenshots/ana sayfa.png)
+![Ana Sayfa](./Screenshots/admin_index.png)
 
 ### Admin Paneli
 ![Admin Paneli](./Screenshots/admin panel.png)
