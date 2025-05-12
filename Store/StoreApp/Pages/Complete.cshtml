@@ -1,15 +1,72 @@
 @page
 
-<div class="text-center">
-    <h6 class="display-6">Thanks</h6>
-    <p>Thanks for placing order# @OrderId</p>
-    <p>We'll ship you goods as soon as possible</p>
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Return To Store</a>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5 text-center">
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 100px; height: 100px;">
+                        <i class="fa-solid fa-check fa-3x"></i>
+                    </div>
+                    
+                    <h2 class="fw-bold mb-3">Siparişiniz Alındı!</h2>
+                    <p class="text-muted mb-4">Siparişiniz başarıyla oluşturuldu. Sipariş numaranız: <span class="fw-bold text-primary">#@OrderId</span></p>
+                    
+                    <div class="alert alert-light border mb-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa-solid fa-truck-fast fa-2x text-primary me-3"></i>
+                            <div class="text-start">
+                                <h6 class="mb-1">Siparişiniz Hazırlanıyor</h6>
+                                <p class="text-muted mb-0">Ürünleriniz en kısa sürede kargoya verilecektir.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-envelope fa-2x text-primary me-3"></i>
+                            <div class="text-start">
+                                <h6 class="mb-1">E-posta Bildirimi</h6>
+                                <p class="text-muted mb-0">Siparişinizle ilgili güncellemeler e-posta adresinize gönderilecektir.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-3">
+                        <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="Index">
+                            <i class="fa-solid fa-store me-2"></i>
+                            Alışverişe Devam Et
+                        </a>
+                        <a class="btn btn-outline-primary" asp-controller="Account" asp-action="Profilim">
+                            <i class="fa-solid fa-user me-2"></i>
+                            Siparişlerimi Görüntüle
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+@section Styles {
+    <style>
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-outline-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+        .alert {
+            border-radius: 1rem;
+        }
+    </style>
+}
 
 @functions
 {
-    [BindProperty(SupportsGet =true)]
-    public String? OrderId {get;set;}
+    [BindProperty(SupportsGet = true)]
+    public String? OrderId { get; set; }
 }

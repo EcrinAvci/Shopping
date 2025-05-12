@@ -1,35 +1,110 @@
 @model Order
-<div class="text-danger" asp-validation-summary="All"></div>
-<form method="post" asp-action="Checkout">
-    <div class="form-group my-3">
-        <label asp-for="Name">Name</label>
-        <input class="form-control" asp-for="Name">
-    </div>
-    <div class="form-group my-3">
-        <label asp-for="Line1"></label>
-        <input class="form-control" asp-for="Line1">
-    </div>
-    <div class="form-group my-3">
-        <label asp-for="Line2"></label>
-        <input class="form-control" asp-for="Line2">
-    </div>
-    <div class="form-group my-3">
-        <label asp-for="Line3"></label>
-        <input class="form-control" asp-for="Line3">
-    </div>
-    <div class="form-group my-3">
-        <label asp-for="City"></label>
-        <input class="form-control" asp-for="City">
-    </div>
-    <div class="form-group my-3">
-        <input asp-for="GiftWrap">
-        <label>Gift Wrap these items.</label>
-    </div>
-    <div class="text-center">
-        <button type="submit" class="btn btn-primary">
-            Complate Order
-        </button>
-    </div>
 
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fa-solid fa-credit-card fa-2x"></i>
+                        </div>
+                        <h3 class="fw-bold">Ödeme Bilgileri</h3>
+                        <p class="text-muted">Siparişinizi tamamlamak için bilgilerinizi girin</p>
+                    </div>
 
-</form>
+                    <div class="text-danger" asp-validation-summary="All"></div>
+
+                    <form method="post" asp-action="Checkout">
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating">
+                                    <input class="form-control" asp-for="Name" placeholder="Ad Soyad">
+                                    <label asp-for="Name">Ad Soyad</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating">
+                                    <input class="form-control" asp-for="Line1" placeholder="Adres Satırı 1">
+                                    <label asp-for="Line1">Adres Satırı 1</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating">
+                                    <input class="form-control" asp-for="Line2" placeholder="Adres Satırı 2">
+                                    <label asp-for="Line2">Adres Satırı 2</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating">
+                                    <input class="form-control" asp-for="Line3" placeholder="Adres Satırı 3">
+                                    <label asp-for="Line3">Adres Satırı 3</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating">
+                                    <input class="form-control" asp-for="City" placeholder="Şehir">
+                                    <label asp-for="City">Şehir</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" asp-for="GiftWrap" id="giftWrap">
+                                    <label class="form-check-label" for="giftWrap">
+                                        <i class="fa-solid fa-gift me-2"></i>
+                                        Hediye Paketi İstiyorum
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa-solid fa-check me-2"></i>
+                                Siparişi Tamamla
+                            </button>
+                            <a href="/Cart" class="btn btn-outline-primary">
+                                <i class="fa-solid fa-arrow-left me-2"></i>
+                                Sepete Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: #0d6efd;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-outline-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+        .form-check-input:checked {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+    </style>
+}

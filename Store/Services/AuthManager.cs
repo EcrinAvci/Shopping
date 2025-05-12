@@ -99,5 +99,16 @@ namespace Services
             }
             throw new Exception("System has problem with user update");
         }
+
+        public async Task<IdentityResult> DeleteUser(string userName)
+        {
+            var user = await GetOneUser(userName);
+            if (user is not null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                return result;
+            }
+            throw new Exception("Kullanıcı bulunamadı.");
+        }
     }
 }

@@ -1,55 +1,117 @@
 @page "/Cart"
 @model CartModel
 
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fa-solid fa-cart-shopping fa-2x"></i>
+                        </div>
+                        <h3 class="fw-bold">Sepetim</h3>
+                        <p class="text-muted">Sepetinizdeki ürünleri görüntüleyin ve düzenleyin</p>
+                    </div>
 
-<div>
-    <div class="text-center display-6">
-        Cart
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Subtotal</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var line in Model.Cart?.Lines ?? Enumerable.Empty<CartLine>())
-            {
-                <tr>
-                    <td>@line.Product.ProductName</td>
-                    <td>@line.Quantity</td>
-                    <td>@line.Product.Price.ToString("C")</td>
-                    <td>@((line.Product.Price*line.Quantity).ToString("c2"))</td>
-                    <td>
-                        <form method="post" asp-page-handler="Remove">
-                            <input type="hidden" name="id"  value="@line.Product.ProductId"/>
-                            <input type="hidden" name="returnUrl"  value="@Model.ReturnUrl"/>
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash"></i>
-                                Remove
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td coldspan="3" class="text-right">Total : </td>
-                <td class="text-right text-danger">
-                    @Model.Cart?.ComputeTotalValue().ToString("c2")
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-    <div class="text-center my-3">
-        <div class="btn-group">
-            <a class="btn btn-primary" href="@Model?.ReturnUrl">Continue Shopping</a>
-            <a class="btn btn-primary mx-2" asp-action="Checkout" asp-controller="Order">Checkout</a>
+                    @if (Model.Cart?.Lines.Count() > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Ürün</th>
+                                        <th class="text-center">Adet</th>
+                                        <th class="text-end">Birim Fiyat</th>
+                                        <th class="text-end">Ara Toplam</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var line in Model.Cart.Lines)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src="@line.Product.ImageUrl" alt="@line.Product.ProductName" class="rounded-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                                    <span class="ms-3">@line.Product.ProductName</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">@line.Quantity</td>
+                                            <td class="text-end">@line.Product.Price.ToString("C")</td>
+                                            <td class="text-end fw-bold">@((line.Product.Price*line.Quantity).ToString("C"))</td>
+                                            <td class="text-end">
+                                                <form method="post" asp-page-handler="Remove" class="d-inline">
+                                                    <input type="hidden" name="id" value="@line.Product.ProductId"/>
+                                                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl"/>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-light">
+                                        <td colspan="3" class="text-end fw-bold">Toplam:</td>
+                                        <td class="text-end fw-bold text-primary fs-5">
+                                            @Model.Cart.ComputeTotalValue().ToString("C")
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="@Model?.ReturnUrl" class="btn btn-outline-primary">
+                                <i class="fa-solid fa-arrow-left me-2"></i>
+                                Alışverişe Devam Et
+                            </a>
+                            <a asp-action="Checkout" asp-controller="Order" class="btn btn-primary">
+                                <i class="fa-solid fa-credit-card me-2"></i>
+                                Ödemeye Geç
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fa-solid fa-cart-shopping fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">Sepetiniz Boş</h4>
+                            <p class="text-muted">Sepetinizde henüz ürün bulunmuyor.</p>
+                            <a href="@Model?.ReturnUrl" class="btn btn-primary mt-3">
+                                <i class="fa-solid fa-arrow-left me-2"></i>
+                                Alışverişe Başla
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+@section Styles {
+    <style>
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-outline-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+        .btn-outline-danger:hover {
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+        }
+        .table > :not(caption) > * > * {
+            padding: 1rem;
+        }
+    </style>
+}

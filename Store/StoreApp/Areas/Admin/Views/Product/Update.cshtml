@@ -1,55 +1,60 @@
 @model ProductDtoForUpdate
 
-<div class="text center">
-    <div class="display-6">Create</div>
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+         <div class="col-md-8 text-center">
+             <h2 class="display-5 fw-bold mb-3">
+                 <i class="fa-solid fa-edit me-2 text-primary"></i>Ürün Güncelle
+             </h2>
+             <p class="text-muted">Ürün bilgilerini güncelleyin.</p>
+         </div>
+    </div>
+    <div class="row justify-content-center">
+         <div class="col-md-8">
+             <div class="card shadow-sm border-0">
+                 <div class="card-body p-4">
+                     <form method="post" asp-action="Update" enctype="multipart/form-data">
+                         <div class="text-danger" asp-validation-summary="All"></div>
+                         <input type="hidden" asp-for="ProductId" />
+                         <div class="form-group my-3">
+                             <label asp-for="CategoryId" class="form-label fw-bold">Kategori</label>
+                             <select class="form-control" asp-items="@ViewBag.Categories" asp-for="CategoryId" placeholder="Kategori seçiniz"></select>
+                         </div>
+                         <div class="form-group my-3">
+                             <label asp-for="ProductName" class="form-label fw-bold">Ürün Adı</label>
+                             <input asp-for="ProductName" class="form-control" placeholder="Ürün adını giriniz" />
+                         </div>
+                         <div class="form-group my-3">
+                             <label asp-for="Summary" class="form-label fw-bold">Özet</label>
+                             <input asp-for="Summary" class="form-control" placeholder="Ürün özetini giriniz" />
+                         </div>
+                         <div class="form-group my-3">
+                             <label asp-for="Price" class="form-label fw-bold">Fiyat</label>
+                             <input asp-for="Price" class="form-control" placeholder="Fiyat giriniz" />
+                         </div>
+                         <div class="form-group my-3">
+                             <label class="form-label fw-bold">Mevcut Görsel</label>
+                             <img class="rounded shadow img-fluid" style="max-width: 150px; transition: transform 0.2s;" src="@Model?.ImageUrl" alt="Ürün Görseli" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" />
+                         </div>
+                         <div class="form-group my-3">
+                             <label asp-for="ImageUrl" class="form-label fw-bold">Yeni Görsel</label>
+                             <input type="file" name="file" class="form-control" />
+                         </div>
+                         <div class="form-group my-3 d-flex gap-2">
+                             <button class="btn btn-primary" type="submit">
+                                 <i class="fa fa-save me-1"></i>Güncelle
+                             </button>
+                             <a asp-action="Index" class="btn btn-outline-primary">
+                                 <i class="fa fa-list me-1"></i>Ürünler
+                             </a>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+    </div>
 </div>
 
-<form method="post" asp-action="Update" enctype="multipart/form-data">
-
-    <div class="text-danger" asp-validation-summary="All"></div>
-
-    <input type="hidden" asp-for="ProductId" />
-
-    <div class="form-group my-3">
-        <label asp-for="CategoryId"></label>
-        <select class="form-control" 
-        asp-items="@ViewBag.Categories"
-        asp-for="CategoryId">
-        </select>
-    </div>
-    
-    <div class="form-group my-3">
-        <label asp-for="ProductName"></label>
-        <input asp-for="ProductName" class="form-control" />
-    </div>
-    <div class="form-group my-3">
-        <label asp-for="Summary"></label>
-        <input asp-for="Summary" class="form-control" />
-    </div>
-
-      <div class="form-group my-3">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-    </div>
-
-    <div class="form-group my3">
-        <img class="rounded shadow" width="150" src="@Model?.ImageUrl" />
-    </div>
-
-      <div class="form-group my-3">
-        <label asp-for="ImageUrl"></label>
-        <input type="file" name="file" class="form-control" />
-    </div>
-
-      <div class="form-group my-3">
-        <div class="btn-group">
-        <button class="btn btn-primary" type="submit">
-            <i class="fa fa-save"></i>
-            Update</button>
-            <a asp-action="Index" class="btn btn-outline-primary">
-                <i class="fa fa-list"></i>
-                Products
-            </a>
-        </div>
-    </div>
-</form>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+}

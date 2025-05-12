@@ -1,57 +1,94 @@
 @model UserDtoForUpdate
-<div class="text-center my-5">
-    <div class="display-6">
-        Update (@Model.UserName)
-    </div>
-</div>
-
-<form method="post" asp-action="Create">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group my-3">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-            </div>
-
-            <div class="form-group my-3">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-            </div>
-
-            <div class="form-group my-3">
-                <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-            </div>
-
-            <div class="from-group my-3">
-                <div class="btn-group d-flex justify-content-end">
-                    <input type="submit" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-outline-primary">
-                        <i class="fa fa-solid fa-arrow-left"></i>
-                        Back
-                    </a>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="avatar-circle bg-primary text-white me-3">
+                            <i class="fas fa-user fa-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0">Kullanıcıyı Güncelle</h3>
+                            <div class="text-muted">@Model.UserName</div>
+                        </div>
+                    </div>
+                    <form method="post" asp-action="Update">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="UserName" class="form-label fw-bold"></label>
+                                    <input asp-for="UserName" class="form-control" />
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Email" class="form-label fw-bold"></label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="PhoneNumber" class="form-label fw-bold"></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group mt-4 d-flex justify-content-end gap-2">
+                                    <input type="submit" class="btn btn-success px-4" value="Güncelle" />
+                                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                        <i class="fa fa-arrow-left"></i> Geri Dön
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Roller</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @foreach (var item in Model.Roles)
+                                        {
+                                            <div class="form-check form-switch">
+                                                <input type="checkbox"
+                                                       name="Roles"
+                                                       value="@item"
+                                                       checked="@(Model.UserRoles.Contains(@item))"
+                                                       class="form-check-input" id="role_@item" />
+                                                <label class="form-check-label" for="role_@item">@item</label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="text-muted mb-2">
+                                    Kullanıcı için roller seçiniz
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="lead p-2 mt-2">
-                Roles
-                @foreach (var item in Model.Roles)
-                {
-                    <div class="form-check my-2">
-                        <input type="checkbox"
-                         name="Roles"
-                          value="@item" 
-                          checked="@(Model.UserRoles.Contains(@item))"
-                          
-                            class="form-check-input" />
-                        <label class="form-check-label">@item</label>
-                    </div>
-                }
-            </div>
-            <div class="text-muted">
-                Please Choose the roles for the user
-            </div>
-        </div>
     </div>
-</form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .avatar-circle {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.10);
+    }
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754;
+    }
+    .form-check-label {
+        margin-left: 0.5rem;
+        font-weight: 500;
+    }
+</style>

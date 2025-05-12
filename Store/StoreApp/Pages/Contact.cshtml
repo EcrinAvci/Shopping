@@ -1,23 +1,102 @@
 @page "/getintouch"
 
-<div class="text-center border my-5 ">
-    <div class="display-6 border-bottom">Contact</div>
-    <div class="lead mt-5">
-        <i class="fa fa-phone bg-secondary text-white p-3 rounded-5 my-3"></i>
-        <p>
-            DESTEK HAT
-        </p>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fa-solid fa-address-book fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold mb-2">İletişim</h2>
+                        <p class="text-muted mb-4">Bizimle iletişime geçmekten çekinmeyin. Size yardımcı olmaktan mutluluk duyarız!</p>
+                    </div>
 
-        <i class="fa-solid fa-address-book bg-secondary text-white p-3 rounded-5 my-3"></i>
-        <p>
-            Adana/ÇUKUROVA
-        </p>
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                            <i class="fa fa-phone fa-2x text-primary mb-2"></i>
+                            <div class="fw-bold">Telefon</div>
+                            <div>DESTEK HAT</div>
+                            <div>+90 555 555 55 55</div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3 mb-md-0">
+                            <i class="fa-solid fa-location-dot fa-2x text-primary mb-2"></i>
+                            <div class="fw-bold">Adres</div>
+                            <div>Adana/ÇUKUROVA</div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <i class="fa-solid fa-envelope fa-2x text-primary mb-2"></i>
+                            <div class="fw-bold">E-posta</div>
+                            <div>adana01@gmail.com</div>
+                        </div>
+                    </div>
 
-        <i class="fa-solid fa-envelope bg-secondary text-white p-3 rounded-5 my-3"></i>
-        <p>
-         adana01@gmail.com
-        </p>
-        
+                    <form class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="name" placeholder="Adınız">
+                                    <label for="name">Adınız</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="email" placeholder="E-posta">
+                                    <label for="email">E-posta</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <textarea class="form-control" placeholder="Mesajınız" id="message" style="height: 120px;"></textarea>
+                            <label for="message">Mesajınız</label>
+                        </div>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa-solid fa-paper-plane me-2"></i>
+                                Mesajı Gönder
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a href="https://goo.gl/maps/4Qw8k" target="_blank" class="btn btn-outline-secondary me-2">
+                            <i class="fa-solid fa-map-location-dot me-1"></i> Haritada Gör
+                        </a>
+                        <a href="#" class="btn btn-outline-dark me-2"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-dark me-2"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-dark"><i class="fa-brands fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
 </div>
+
+@section Styles {
+    <style>
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: #0d6efd;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-outline-primary:hover, .btn-outline-dark:hover, .btn-outline-secondary:hover {
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.2);
+        }
+        .card {
+            border-radius: 1.5rem;
+        }
+    </style>
+}

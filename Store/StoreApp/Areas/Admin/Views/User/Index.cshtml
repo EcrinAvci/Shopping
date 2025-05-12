@@ -1,33 +1,189 @@
 @model IEnumerable<IdentityUser>
 
-<div class="text-center my-5">
-    <div class="display-6">Users</div>
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            <i class="fas fa-users me-2"></i>Kullanıcılar
+        </h2>
+        <div class="d-flex gap-2">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Kullanıcı ara...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <a class="btn btn-success" asp-action="Create">
+                <i class="fas fa-user-plus me-1"></i>Yeni Kullanıcı
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="usersTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 50px">#</th>
+                            <th>Kullanıcı Adı</th>
+                            <th>E-posta</th>
+                            <th>Telefon</th>
+                            <th>Roller</th>
+                            <th style="width: 250px">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int counter = 1;}
+                        @foreach(IdentityUser user in Model)
+                        {
+                            <tr>
+                                <td class="text-muted">@counter</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-circle bg-primary text-white me-2">
+                                            @user.UserName?.Substring(0, 1).ToUpper()
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">@user.UserName</div>
+                                            <small class="text-muted">@user.Id</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(user.Email))
+                                    {
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-envelope me-1"></i>@user.Email
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(user.PhoneNumber))
+                                    {
+                                        <span class="badge bg-secondary">
+                                            <i class="fas fa-phone me-1"></i>@user.PhoneNumber
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                                <td user-name="@user.UserName" user-role="">
+                                    <span class="badge bg-warning">
+                                        <i class="fas fa-spinner fa-spin me-1"></i>Yükleniyor...
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-primary" asp-action="Update" asp-route-id="@user.UserName"
+                                           data-bs-toggle="tooltip" title="Düzenle">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-warning" asp-action="ResetPassword" asp-route-id="@user.UserName"
+                                           data-bs-toggle="tooltip" title="Şifre Sıfırla">
+                                            <i class="fas fa-key"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-outline-danger" 
+                                                data-bs-toggle="tooltip" title="Sil"
+                                                onclick="confirmDelete('@user.UserName')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Id </th>
-            <th>UserName </th>
-            <th>Roles </th>
-            <th>Operations </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(IdentityUser user in Model)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td>-</td>
-                <td>
-                    <div class="btn-group">
-                        <a class="btn btn-sm btn-warning" asp-action="Update" asp-route-id="@user.UserName">Edit</a>
-                        <a class="btn btn-sm btn-info" asp-action="ResetPassword" asp-route-id="@user.UserName">Reset Password</a>
-                        <a class="btn btn-sm btn-danger">Delete</a>
-                    </div>
-                </td>
-            </tr>
+<!-- Silme Onay Modalı -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kullanıcı Silme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kullanıcıyı silmek istediğinizden emin misiniz?</p>
+                <p class="text-danger"><small>Bu işlem geri alınamaz!</small></p>
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" name="userName" id="userNameToDelete" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Tooltip'leri aktifleştir
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            // Arama fonksiyonu
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#usersTable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        // Silme onay modalı
+        function confirmDelete(userName) {
+            document.getElementById('userNameToDelete').value = userName;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
         }
-    </tbody>
-</table>
+    </script>
+}
+
+<style>
+    .avatar-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1rem 0.75rem;
+    }
+    
+    .btn-group .btn {
+        padding: 0.375rem 0.75rem;
+    }
+    
+    .btn-group .btn:hover {
+        z-index: 1;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(0,0,0,.02);
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.75em;
+    }
+</style>

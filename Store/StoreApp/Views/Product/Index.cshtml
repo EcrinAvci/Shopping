@@ -3,8 +3,16 @@
     <div class="col-md-3">
         @await Component.InvokeAsync("CategoriesMenu")
         @await Component.InvokeAsync("ProductFilterMenu")
-        <div products="" number="3"></div>
-
+        <div class="my-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-gradient-primary text-white fw-bold text-center rounded-top-4" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);">
+                    <i class="fa fa-box me-2"></i> Son Eklenen Ürünler
+                </div>
+                <div class="card-body p-0">
+                    <div products="" number="3"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-9">
         <div class="row my-3">
@@ -21,7 +29,34 @@
     </div>
 </div>
 @section Footer {
-    <div>
-        Only for Index Footer
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center align-items-center py-4" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%); color: #fff; border-radius: 1.5rem 1.5rem 0 0;">
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <span class="fw-bold fs-5">ESA Store</span>
+            </div>
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <a href="#" class="text-white mx-3"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="#" class="text-white mx-3"><i class="fab fa-twitter fa-2x"></i></a>
+                <a href="#" class="text-white mx-3"><i class="fab fa-facebook fa-2x"></i></a>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="fw-bold">İletişim</div>
+                <div class="small">adana01@gmail.com</div>
+                <div class="small">+90 555 555 55 55</div>
+            </div>
+        </div>
     </div>
+}
+@section Styles {
+    <style>
+        .card-header.bg-gradient-primary {
+            background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important;
+            color: #fff !important;
+            border-top-left-radius: 1.5rem !important;
+            border-top-right-radius: 1.5rem !important;
+        }
+        .card .list-group-item-action:hover {
+            background: #e3f0ff;
+        }
+    </style>
 }

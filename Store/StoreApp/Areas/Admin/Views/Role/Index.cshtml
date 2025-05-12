@@ -1,12 +1,42 @@
 @model IEnumerable<IdentityRole>
 
-<div class="text-center my-5">
-    <div class="display-6">Roles</div>
+<div class="container py-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8 text-center">
+            <h2 class="display-5 fw-bold mb-3">
+                <i class="fa-solid fa-user-shield me-2 text-primary"></i>Roller
+            </h2>
+            <p class="text-muted">Sistemde tanımlı olan tüm roller aşağıda listelenmiştir.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex flex-wrap gap-3 justify-content-center">
+                @foreach (var role in Model)
+                {
+                    <div class="card shadow-sm border-0" style="min-width: 180px;">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <span class="badge bg-gradient-primary text-dark fs-5 px-3 py-2">
+                                <i class="fa-solid fa-shield-halved me-2 text-secondary"></i>@role.Name
+                            </span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 
-<ul class="list-group my-5">
-    @foreach (var role in Model)
-    {
-        <li class="list-group-item">@role.Name</li>
-    }
-</ul>
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .bg-gradient-primary {
+            background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+        }
+        .card:hover {
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.10)!important;
+            transform: translateY(-3px) scale(1.03);
+            transition: all 0.2s;
+        }
+    </style>
+}

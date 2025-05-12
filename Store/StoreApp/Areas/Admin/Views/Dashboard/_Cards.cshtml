@@ -1,0 +1,126 @@
+@{
+    var cardClasses = new[] {
+        "bg-gradient-primary",
+        "bg-gradient-success",
+        "bg-gradient-warning",
+        "bg-gradient-info"
+    };
+}
+
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm hover-card @cardClasses[0] text-white">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="fas fa-box fa-2x mb-2"></i>
+                    <h6 class="card-subtitle mb-2 text-white-50">Toplam</h6>
+                    <h5 class="card-title fw-bold">Ürün</h5>
+                </div>
+                <h3 class="display-4 fw-bold mb-3">
+                    @await Component.InvokeAsync("ProductSummary")
+                </h3>
+                <div class="d-flex justify-content-center gap-2">
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-sm btn-light">
+                        <i class="fas fa-list me-1"></i>Ürünler
+                    </a>
+                    <a asp-controller="Product" asp-action="Create" class="btn btn-sm btn-light">
+                        <i class="fas fa-plus me-1"></i>Yeni
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm hover-card @cardClasses[1] text-white">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="fas fa-tags fa-2x mb-2"></i>
+                    <h6 class="card-subtitle mb-2 text-white-50">Toplam</h6>
+                    <h5 class="card-title fw-bold">Kategori</h5>
+                </div>
+                <h3 class="display-4 fw-bold mb-3">
+                    @await Component.InvokeAsync("CategorySummary")
+                </h3>
+                <div class="d-flex justify-content-center gap-2">
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-sm btn-light">
+                        <i class="fas fa-list me-1"></i>Kategoriler
+                    </a>
+                    <a asp-controller="Category" asp-action="Create" class="btn btn-sm btn-light">
+                        <i class="fas fa-plus me-1"></i>Yeni
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm hover-card @cardClasses[2] text-white">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="fas fa-clock fa-2x mb-2"></i>
+                    <h6 class="card-subtitle mb-2 text-white-50">Bekleyen</h6>
+                    <h5 class="card-title fw-bold">Sipariş</h5>
+                </div>
+                <h3 class="display-4 fw-bold mb-3">
+                    @await Component.InvokeAsync("OrderInProgress")
+                </h3>
+                <div class="d-flex justify-content-center">
+                    <a asp-controller="Order" asp-action="Index" class="btn btn-sm btn-light">
+                        <i class="fas fa-list me-1"></i>Siparişler
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm hover-card @cardClasses[3] text-white">
+            <div class="card-body text-center p-4">
+                <div class="mb-3">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <h6 class="card-subtitle mb-2 text-white-50">Toplam</h6>
+                    <h5 class="card-title fw-bold">Kullanıcı</h5>
+                </div>
+                <h3 class="display-4 fw-bold mb-3">
+                    @await Component.InvokeAsync("UserSummary")
+                </h3>
+                <div class="d-flex justify-content-center gap-2">
+                    <a asp-controller="User" asp-action="Index" class="btn btn-sm btn-light">
+                        <i class="fas fa-list me-1"></i>Kullanıcılar
+                    </a>
+                    <a asp-controller="User" asp-action="Create" class="btn btn-sm btn-light">
+                        <i class="fas fa-plus me-1"></i>Yeni
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(45deg, #1cc88a, #13855c);
+    }
+
+    .bg-gradient-warning {
+        background: linear-gradient(45deg, #f6c23e, #dda20a);
+    }
+
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #36b9cc, #258391);
+    }
+</style>    

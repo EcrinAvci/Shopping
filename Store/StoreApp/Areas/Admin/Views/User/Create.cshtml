@@ -1,55 +1,170 @@
 @model UserDtoForCreation
 
-<div class="text-center my-5">
-    <div class="display-6">
-        Create User
-    </div>
-</div>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="avatar-circle bg-success text-white me-3">
+                            <i class="fas fa-user-plus fa-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="mb-0">Yeni Kullanıcı Oluştur</h3>
+                            <div class="text-muted">Sisteme yeni bir kullanıcı ekleyin</div>
+                        </div>
+                    </div>
 
-<form method="post" asp-action="Create">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group my-3">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-            </div>
+                    <div asp-validation-summary="All" class="text-danger mb-4"></div>
 
-            <div class="form-group my-3">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-            </div>
+                    <form method="post" asp-action="Create">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="UserName" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <input asp-for="UserName" class="form-control" placeholder="Kullanıcı adı" />
+                                    </div>
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
 
-            <div class="form-group my-3">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-            </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Email" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                        <input asp-for="Email" class="form-control" placeholder="E-posta adresi" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
 
-            <div class="form-group my-3">
-                <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-            </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Password" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-lock"></i>
+                                        </span>
+                                        <input asp-for="Password" class="form-control" placeholder="Şifre" />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
 
-            <div class="from-group my-3">
-                <div class="btn-group d-flex justify-content-end">
-                    <input type="submit" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-outline-primary">
-                        <i class="fa fa-solid fa-arrow-left"></i>
-                        Back
-                    </a>
+                                <div class="form-group mb-3">
+                                    <label asp-for="PhoneNumber" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                        <input asp-for="PhoneNumber" class="form-control" placeholder="Telefon numarası" />
+                                    </div>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group mt-4 d-flex justify-content-end gap-2">
+                                    <button type="submit" class="btn btn-success px-4">
+                                        <i class="fas fa-save me-2"></i>Kaydet
+                                    </button>
+                                    <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                        <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card bg-light border-0">
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold mb-3">
+                                            <i class="fas fa-user-shield me-2"></i>Kullanıcı Rolleri
+                                        </h5>
+                                        <div class="d-flex flex-column gap-2">
+                                            @foreach (var item in Model.Roles)
+                                            {
+                                                <div class="form-check form-switch">
+                                                    <input type="checkbox" 
+                                                           name="Roles" 
+                                                           value="@item" 
+                                                           class="form-check-input" 
+                                                           id="role_@item" />
+                                                    <label class="form-check-label" for="role_@item">
+                                                        <span class="badge bg-primary me-2">@item</span>
+                                                        @item rolünü ata
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="text-muted mt-3">
+                                            <small>
+                                                <i class="fas fa-info-circle me-1"></i>
+                                                Kullanıcı için en az bir rol seçmelisiniz
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="lead p-2 mt-2">
-                Roles
-                @foreach (var item in Model.Roles)
-                {
-                    <div class="form-check my-2">
-                        <input type="checkbox" name="Roles" value="@item" class="form-check-input" />
-                        <label class="form-check-label">@item</label>
-                    </div>
-                }
-            </div>
-        </div>
     </div>
-</form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    .avatar-circle {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.10);
+    }
+    .form-check-input:checked {
+        background-color: #198754;
+        border-color: #198754;
+    }
+    .form-check-label {
+        margin-left: 0.5rem;
+        font-weight: 500;
+    }
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    .input-group .form-control {
+        border-left: none;
+    }
+    .input-group .form-control:focus {
+        border-color: #ced4da;
+        box-shadow: none;
+    }
+    .input-group:focus-within {
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+    }
+    .input-group:focus-within .input-group-text,
+    .input-group:focus-within .form-control {
+        border-color: #198754;
+    }
+    .btn {
+        transition: all 0.3s ease;
+    }
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+    .btn-success:hover {
+        box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+    }
+    .btn-outline-secondary:hover {
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.2);
+    }
+</style>

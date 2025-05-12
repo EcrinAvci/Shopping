@@ -10,3 +10,4 @@
 /Users/ecrinavci/Documents/asp.net/MVC/Store/Entities/obj/Debug/net6.0/Entities.pdb
 /Users/ecrinavci/Documents/asp.net/MVC/Store/Entities/obj/Debug/net6.0/ref/Entities.dll
 /Users/ecrinavci/Documents/asp.net/MVC/Store/Entities/obj/Debug/net6.0/Entities.csproj.AssemblyReference.cache
+/Users/ecrinavci/Documents/asp.net/MVC/Store/Entities/obj/Debug/net6.0/Entities.sourcelink.json

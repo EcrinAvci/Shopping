@@ -1,1 +1,54 @@
-@await Component.InvokeAsync("ShowCase")
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center align-items-center text-center mb-5">
+        <div class="col-lg-8">
+            <h1 class="display-3 fw-bold mb-3">Hoşgeldiniz!</h1>
+            <p class="lead mb-4">En yeni ürünler, en iyi fırsatlar ve daha fazlası burada. Hemen keşfetmeye başlayın!</p>
+            <a href="/Product" class="btn btn-primary btn-lg px-4">Ürünleri Gör</a>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-4 text-center">Tüm Ürünler</h2>
+            <div class="row justify-content-center">
+                @foreach(var product in Model)
+                {
+                    @await Html.PartialAsync("_ProductCard", product)
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-4 text-center">Vitrin</h2>
+            <div class="d-flex justify-content-center">
+                @await Component.InvokeAsync("ShowCase")
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ana sayfa özel footer alanı -->
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center align-items-center py-4" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%); color: #fff; border-radius: 1.5rem 1.5rem 0 0;">
+        <div class="col-md-4 text-center mb-3 mb-md-0">
+            <span class="fw-bold fs-5">ESA Store</span>
+        </div>
+        <div class="col-md-4 text-center mb-3 mb-md-0">
+            <a href="#" class="text-white mx-3"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="#" class="text-white mx-3"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="#" class="text-white mx-3"><i class="fab fa-facebook fa-2x"></i></a>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="fw-bold">İletişim</div>
+            <div class="small">adana01@gmail.com</div>
+            <div class="small">+90 555 555 55 55</div>
+        </div>
+    </div>
+</div>

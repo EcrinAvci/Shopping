@@ -9,9 +9,14 @@
 @if (User.Identity.IsAuthenticated)
 {
     <li class="nav-item">
+        <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Account" asp-action="Profilim">
+            <i class="fa fa-user-circle me-1"></i> Profilim
+        </a>
+    </li>
+    <li class="nav-item">
     <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Account"
     asp-route-returnUrl="@Context.Request.PathAndQuery()"
-     asp-action="Logout">Logout</a>
+     asp-action="Logout">Çıkış Yap</a>
 </li>
 }
 else

@@ -1,20 +1,30 @@
 @model IEnumerable<Category>
 
-<div class="my-3">
-    <h6 class="lead">
-        <i class="fa fa-solid fa-bars text-secondary"></i>
-        Categories
-    </h6>
-</div>
-<div class="my-4">
-    <ul class="list-group">
+<div class="card shadow-sm border-0 mb-4 rounded-4">
+    <div class="card-header bg-gradient-primary text-white fw-bold text-center rounded-top-4" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);">
+        <i class="fa fa-solid fa-bars me-2"></i> Kategoriler
+    </div>
+    <ul class="list-group list-group-flush">
         @foreach(var cat in Model)
         {
-            <li class="list-group-item">
-                <a asp-action="Index" asp-route-CategoryId="@cat.CategoryId">
-                @cat.CategoryName
+            <li class="list-group-item list-group-item-action py-3 px-4" style="transition: background 0.2s;">
+                <a asp-action="Index" asp-route-CategoryId="@cat.CategoryId" class="text-decoration-none text-dark fw-semibold">
+                    @cat.CategoryName
                 </a>
             </li>
         }
     </ul>
 </div>
+@section Styles {
+    <style>
+        .card-header.bg-gradient-primary {
+            background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%) !important;
+            color: #fff !important;
+            border-top-left-radius: 1.5rem !important;
+            border-top-right-radius: 1.5rem !important;
+        }
+        .list-group-item-action:hover {
+            background: #e3f0ff;
+        }
+    </style>
+}

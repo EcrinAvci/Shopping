@@ -9,20 +9,44 @@
       "PackagePath": "staticwebassets/html/Error.html"
     },
     {
-      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/1.jpg",
-      "PackagePath": "staticwebassets/images/1.jpg"
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/airpods.jpg",
+      "PackagePath": "staticwebassets/images/airpods.jpg"
     },
     {
-      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/2.jpg",
-      "PackagePath": "staticwebassets/images/2.jpg"
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/bilgisayar.jpg",
+      "PackagePath": "staticwebassets/images/bilgisayar.jpg"
     },
     {
-      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/3.jpg",
-      "PackagePath": "staticwebassets/images/3.jpg"
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/iskambil.jpeg",
+      "PackagePath": "staticwebassets/images/iskambil.jpeg"
     },
     {
-      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/4.jpg",
-      "PackagePath": "staticwebassets/images/4.jpg"
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/kask.jpeg",
+      "PackagePath": "staticwebassets/images/kask.jpeg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/keyboards.jpg",
+      "PackagePath": "staticwebassets/images/keyboards.jpg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/mause.jpg",
+      "PackagePath": "staticwebassets/images/mause.jpg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/monitörr.jpeg",
+      "PackagePath": "staticwebassets/images/monitörr.jpeg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/pese5.jpg",
+      "PackagePath": "staticwebassets/images/pese5.jpg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/tarih.jpg",
+      "PackagePath": "staticwebassets/images/tarih.jpg"
+    },
+    {
+      "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/images/xbox.jpeg",
+      "PackagePath": "staticwebassets/images/xbox.jpeg"
     },
     {
       "Id": "/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/wwwroot/js/site.js",

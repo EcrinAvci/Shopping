@@ -1,0 +1,106 @@
+@model UserProfileViewModel
+@{
+    ViewData["Title"] = "Profilim";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-circle fa-4x text-primary"></i>
+                        <h2 class="card-title mt-3">Profil Bilgilerim</h2>
+                        <p class="text-muted">Hesap bilgilerinizi görüntüleyin ve güncelleyin</p>
+                    </div>
+
+                    <form asp-action="UpdateProfile" method="post" class="needs-validation" novalidate>
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach (var modelError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@modelError.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" value="@Model.UserName" disabled>
+                            <small class="text-muted">Kullanıcı adı değiştirilemez</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold">E-posta</label>
+                            <input asp-for="Email" class="form-control" type="email" required>
+                            <div class="invalid-feedback">
+                                Lütfen geçerli bir e-posta adresi giriniz.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="PhoneNumber" class="form-label fw-bold">Telefon Numarası</label>
+                            <input asp-for="PhoneNumber" class="form-control" type="tel" 
+                                   pattern="[0-9\s]{10,14}" 
+                                   placeholder="05XX XXX XX XX"
+                                   required>
+                            <div class="invalid-feedback">
+                                Lütfen geçerli bir telefon numarası giriniz (10-14 rakam).
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Değişiklikleri Kaydet
+                            </button>
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">
+                                <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Sayfa yüklendiğinde animasyon
+            $('.card').hide().fadeIn(500);
+            
+            // Bootstrap validation
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+
+            // Telefon numarası formatı
+            $('#PhoneNumber').on('input', function() {
+                let value = $(this).val().replace(/\D/g, '');
+                if (value.length > 0) {
+                    value = value.match(new RegExp('.{1,3}', 'g')).join(' ');
+                }
+                $(this).val(value);
+            });
+        });
+    </script>
+} 

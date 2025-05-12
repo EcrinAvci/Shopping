@@ -1,42 +1,70 @@
 @model LoginModel
 
-<div class="text-center my-5">
-    <h6 class="display-6">
-        <i class="fa-solid fa-user-plus bg-secondary p-3 rounded-5"></i>
-        <br />
-        Login</h6>
-</div>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                            <i class="fa-solid fa-user fa-2x"></i>
+                        </div>
+                        <h3 class="fw-bold">Giriş Yap</h3>
+                        <p class="text-muted">Hesabınıza giriş yaparak alışverişe başlayın</p>
+                    </div>
 
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <div class="text-center">
-            <div class="text-danger" asp-validation-summary="All"></div>
-        </div>
-        <form method="post" asp-action="Login">
+                    <div class="text-danger" asp-validation-summary="All"></div>
 
-            <input type="hidden" asp-for="ReturnUrl" />
+                    <form method="post" asp-action="Login">
+                        <input type="hidden" asp-for="ReturnUrl" />
 
-            <div class="form-group my-3">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
+                        <div class="form-floating mb-3">
+                            <input asp-for="Name" class="form-control" placeholder="Kullanıcı Adı" />
+                            <label asp-for="Name">Kullanıcı Adı</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="password" asp-for="Password" class="form-control" placeholder="Şifre" />
+                            <label asp-for="Password">Şifre</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa-solid fa-right-to-bracket me-2"></i>
+                                Giriş Yap
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Hesabınız yok mu? 
+                            <a asp-action="Register" class="text-primary fw-bold text-decoration-none">
+                                Hemen Kaydolun
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group my-3">
-                <label asp-for="Password"></label>
-                <input type="Password" asp-for="Password" class="form-control" />
-            </div>
-
-            <div class="form-group my-3 d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-user-plus"></i>
-                    Login
-                </button>
-            </div>
-        </form>
-
-        <div>
-            If you don't have an account. Please Click here to achieve <a asp-action="Register">Registration page</a>
         </div>
     </div>
-    <div class="col-md-3"></div>
 </div>
+
+@section Styles {
+    <style>
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            color: #0d6efd;
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+    </style>
+}

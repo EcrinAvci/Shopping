@@ -31,47 +31,48 @@ namespace StoreApp.Infrastructere.Extensions
             });
         }
    
-        public static async void ConfigureDefaultAdminUser(this IApplicationBuilder app)
+        public static async Task ConfigureDefaultAdminUser(this IApplicationBuilder app)
         {
-            const string adminUser="Admin";
-            const string adminPassword="Admin+123456";
+            const string adminUser = "Admin";
+            const string adminPassword = "Admin+123456";
+            const string adminEmail = "eco03gfb@gmail.com";
+            const string adminPhone = "5362610740";
 
-            UserManager<IdentityUser> userManager = app
-            .ApplicationServices
-            .CreateScope()
-            .ServiceProvider
-            .GetRequiredService<UserManager<IdentityUser>>();
-
-            RoleManager<IdentityRole> roleManager=app
-            .ApplicationServices
-            .CreateAsyncScope()
-            .ServiceProvider
-            .GetRequiredService<RoleManager<IdentityRole>>();
-
-            IdentityUser user = await userManager.FindByNameAsync(adminUser);
-
-            if(user is null)
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                user=new IdentityUser(adminUser)
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                // Rolleri kontrol et ve yoksa ekle
+                string[] roles = new[] { "Admin", "User", "Editor" };
+                foreach (var role in roles)
                 {
-                    Email= "eco03gfb@gmail.com",
-                    PhoneNumber="5362610740",
-                    UserName=adminUser,
-                };
+                    if (!await roleManager.RoleExistsAsync(role))
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                }
 
-                var result = await userManager.CreateAsync(user,adminPassword);
-                if(!result.Succeeded)
-                    throw new Exception("Admin user not creaded");
+                // Admin kullanıcıyı kontrol et ve yoksa ekle
+                var user = await userManager.FindByNameAsync(adminUser);
+                if (user == null)
+                {
+                    user = new IdentityUser(adminUser)
+                    {
+                        Email = adminEmail,
+                        PhoneNumber = adminPhone,
+                        UserName = adminUser,
+                    };
+                    var result = await userManager.CreateAsync(user, adminPassword);
+                    if (!result.Succeeded)
+                        throw new Exception("Admin kullanıcı oluşturulamadı: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+                }
 
-                var roleResult= await userManager.AddToRolesAsync(user,
-                roleManager
-                    .Roles
-                    .Select(r => r.Name)
-                    .ToList()
-                );
-
-                if(!roleResult.Succeeded)
-                    throw new Exception("Mistake");    
+                // Admin rolü atanmış mı kontrol et, yoksa ata
+                if (!await userManager.IsInRoleAsync(user, "Admin"))
+                {
+                    var roleResult = await userManager.AddToRoleAsync(user, "Admin");
+                    if (!roleResult.Succeeded)
+                        throw new Exception("Admin kullanıcıya rol atanamadı: " + string.Join(", ", roleResult.Errors.Select(e => e.Description)));
+                }
             }
         }
     }

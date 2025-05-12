@@ -1,9 +1,9 @@
-
 using StoreApp.Infrastructere.Extensions;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
+
+// HTTP üzerinden çalışması için ayarları değiştiriyorum
+builder.WebHost.UseUrls("http://localhost:5000");
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -21,11 +21,9 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseSession();
 
-app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.UseEndpoints(endpoints => 
 {
@@ -35,16 +33,12 @@ app.UseEndpoints(endpoints =>
         pattern:"Admin/{controller=Dashboard}/{action=Index}/{id?}"
     );
 
-
     endpoints.MapControllerRoute("default","{controller=Home}/{action=Index}/{id?}");
-
     endpoints.MapRazorPages();
+    endpoints.MapControllers();
 });
-
-
-
 
 app.ConfigureAndCheckMigration();
 app.ConfigureLocalization();
-app.ConfigureDefaultAdminUser();
+await app.ConfigureDefaultAdminUser();
 app.Run();

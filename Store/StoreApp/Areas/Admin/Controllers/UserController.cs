@@ -1,4 +1,3 @@
-
 using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -37,10 +36,12 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] UserDtoForCreation userDto)
         {
+            if (!ModelState.IsValid)
+                return View(userDto);
             var result = await _manager.AuthService.CreateUser(userDto);
             return result.Succeeded
              ? RedirectToAction("Index")
-             : View();
+             : View(userDto);
         }
 
         public async Task<IActionResult> Update([FromRoute(Name ="id")]string id)
@@ -53,12 +54,10 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update([FromForm] UserDtoForUpdate userDto)
         {
-            if(ModelState.IsValid)
-            {
+            if(!ModelState.IsValid)
+                return View(userDto);
             await _manager.AuthService.Update(userDto);
             return RedirectToAction("Index");
-            }
-            return View();
         }
         
         public async Task<ActionResult> ResetPassword([FromRoute(Name ="id")] string id)
@@ -78,6 +77,28 @@ namespace StoreApp.Areas.Admin.Controllers
             return result.Succeeded
                 ? RedirectToAction("Index")
                 : View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm] string userName)
+        {
+            try
+            {
+                var result = await _manager.AuthService.DeleteUser(userName);
+                if (result.Succeeded)
+                {
+                    TempData["success"] = "Kullanıcı başarıyla silindi.";
+                }
+                else
+                {
+                    TempData["danger"] = "Kullanıcı silinirken bir hata oluştu.";
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["danger"] = ex.Message;
+            }
+            return RedirectToAction("Index");
         }
     }
 }

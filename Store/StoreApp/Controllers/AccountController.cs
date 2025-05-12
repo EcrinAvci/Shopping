@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using StoreApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StoreApp.Controllers
 {
@@ -17,6 +18,7 @@ namespace StoreApp.Controllers
             _signInManager = signInManager;
         }
 
+        [AllowAnonymous]
         public IActionResult Login([FromQuery(Name = "ReturnUrl")] string ReturnUrl = "/")
         {
             return View(new LoginModel()
@@ -26,6 +28,7 @@ namespace StoreApp.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromForm] LoginModel model)
         {
@@ -52,41 +55,98 @@ namespace StoreApp.Controllers
             return Redirect(ReturnUrl);
         }
 
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm] RegisterDto model)
         {
-            var user = new IdentityUser
+            if (ModelState.IsValid)
             {
-                UserName = model.UserName,
-                Email = model.Email,
+                var user = new IdentityUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    TempData["SuccessMessage"] = "Hesabınız başarıyla oluşturulmuştur. Giriş yapabilirsiniz.";
+                    return RedirectToAction("Login");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Profilim()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var userInfo = new UserProfileViewModel
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber ?? "Telefon numarası eklenmemiş"
             };
 
-            var result = await _userManager
-                .CreateAsync(user, model.Password);
+            return View(userInfo);
+        }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfile(UserProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.Remove("UserName");
+                if (!ModelState.IsValid)
+                {
+                    return View("Profilim", model);
+                }
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Kullanıcı bilgilerini güncelle
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                var roleResult = await _userManager
-                .AddToRoleAsync(user, "User");
-
-                if (roleResult.Succeeded)
-                    return RedirectToAction("Login", new { ReturnUrl = "/" });
+                TempData["SuccessMessage"] = "Profil bilgileriniz başarıyla güncellendi.";
             }
             else
             {
-                foreach (var err in result.Errors)
+                foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", err.Description);
+                    ModelState.AddModelError("", error.Description);
                 }
             }
-            return View();
-        }
 
+            return RedirectToAction("Profilim");
+        }
     }
 }

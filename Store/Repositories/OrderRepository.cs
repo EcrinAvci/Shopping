@@ -36,10 +36,13 @@ namespace Repositories
 
         public void SaveOrder(Order order)
         {
-            _context.AttachRange(order.Lines.Select(I=> I.Product));
-            if(order.OrderId==0)
+            if(order.OrderId == 0)
             {
                 _context.Orders.Add(order);
+                foreach(var line in order.Lines)
+                {
+                    _context.Entry(line.Product).State = EntityState.Unchanged;
+                }
             }
             _context.SaveChanges();
         }

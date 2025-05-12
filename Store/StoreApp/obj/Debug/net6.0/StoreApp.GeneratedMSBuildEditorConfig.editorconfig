@@ -18,12 +18,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Category/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvQ2F0ZWdvcnkvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Category/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvQ2F0ZWdvcnkvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvRGFzaGJvYXJkL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Dashboard/_Cards.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvRGFzaGJvYXJkL19DYXJkcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Order/Index.cshtml]
@@ -56,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Shared/_Navbar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvU2hhcmVkL19OYXZiYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXMvQWRtaW4vVmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Areas/Admin/Views/User/Create.cshtml]
@@ -108,6 +120,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/Account/Profilim.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Qcm9maWxpbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/Account/Register.cshtml]
@@ -164,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/Shared/_ProductCard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Qcm9kdWN0Q2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/ecrinavci/Documents/asp.net/MVC/Store/StoreApp/Views/_ViewImports.cshtml]

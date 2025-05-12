@@ -1,2 +1,178 @@
+@model IEnumerable<Category>
 
-    <h3>Category Index</h3>
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            <i class="fas fa-tags me-2"></i>Kategoriler
+        </h2>
+        <div class="d-flex gap-2">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Kategori ara...">
+                <button class="btn btn-outline-secondary" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <a class="btn btn-success" asp-action="Create">
+                <i class="fas fa-plus me-1"></i>Yeni Kategori
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4" id="categoriesContainer">
+        @foreach(var category in Model)
+        {
+            <div class="col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm hover-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">@category.CategoryName</h5>
+                            </div>
+                            <span class="badge bg-primary">
+                                <i class="fas fa-box me-1"></i>
+                                @(category.Products?.Count ?? 0) Ürün
+                            </span>
+                        </div>
+                        
+                        @if(category.Products?.Any() == true)
+                        {
+                            <div class="mb-3">
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach(var product in category.Products.Take(3))
+                                    {
+                                        <div class="position-relative">
+                                            <img src="@product.ImageUrl" 
+                                                 alt="@product.ProductName"
+                                                 class="rounded"
+                                                 style="width: 60px; height: 60px; object-fit: cover;">
+                                            <span class="position-absolute bottom-0 end-0 badge bg-dark rounded-circle"
+                                                  style="transform: translate(25%, 25%);">
+                                                @product.Price.ToString("C0")
+                                            </span>
+                                        </div>
+                                    }
+                                    @if(category.Products.Count > 3)
+                                    {
+                                        <div class="position-relative">
+                                            <div class="rounded bg-light d-flex align-items-center justify-content-center"
+                                                 style="width: 60px; height: 60px;">
+                                                <span class="text-muted">+@(category.Products.Count - 3)</span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        
+                        <div class="d-flex gap-2 mt-auto">
+                            <a class="btn btn-sm btn-outline-primary flex-grow-1" 
+                               asp-action="Update" 
+                               asp-route-id="@category.CategoryId"
+                               data-bs-toggle="tooltip" 
+                               title="Düzenle">
+                                <i class="fas fa-edit me-1"></i>Düzenle
+                            </a>
+                            <button class="btn btn-sm btn-outline-danger flex-grow-1"
+                                    onclick="confirmDelete(@category.CategoryId)"
+                                    data-bs-toggle="tooltip"
+                                    title="Sil">
+                                <i class="fas fa-trash me-1"></i>Sil
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if(!Model.Any())
+    {
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-tags fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Henüz kategori bulunmuyor</h4>
+                <p class="text-muted">Kategoriler burada listelenecek</p>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Silme Onay Modalı -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kategori Silme</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bu kategoriyi silmek istediğinizden emin misiniz?</p>
+                <p class="text-danger"><small>Bu işlem geri alınamaz ve kategoriye ait tüm ürünler de silinecektir!</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Tooltip'leri aktifleştir
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            // Arama fonksiyonu
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".col-md-4").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        // Silme onay modalı
+        let categoryToDelete = null;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+        function confirmDelete(categoryId) {
+            categoryToDelete = categoryId;
+            deleteModal.show();
+        }
+
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (categoryToDelete) {
+                window.location.href = `/Admin/Category/Delete/${categoryToDelete}`;
+            }
+        });
+    </script>
+}
+
+<style>
+    .hover-card {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.75em;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-body > div:last-child {
+        margin-top: auto;
+    }
+</style>
