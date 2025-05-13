@@ -55,6 +55,9 @@ Bu proje, ASP.NET (MVC) ve SQLite veritabanı kullanılarak geliştirilen basit 
 
 ### Admin Paneli
 ![Admin Paneli](./Screenshot/admin_index.png)
+## Ekran Görüntüleri
+> Projeye ait tüm ekran görüntüleri `Screenshot` klasöründe bulunmaktadır.
+
 
 ## Lisans
 
